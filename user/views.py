@@ -8,9 +8,8 @@ from .serializers import UserSerializer, SignupSerializer, MyTokenObtainPairSeri
 from rest_framework_simplejwt.views import TokenObtainPairView
 
 from django.contrib.auth.hashers import check_password
-# from rest_framework.views import APIView
 
-# from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth import login, logout
 
 
 @api_view(['GET', 'POST'])
@@ -35,15 +34,9 @@ class MyTokenObtainPairView(TokenObtainPairView):
 
 @api_view(['GET', 'POST'])
 def signin(request):
-    # 임시
-    # signin_serializer = SigninSerializer(data=request.data)
-    # # user_id 존재
-    # if signin_serializer.is_valid():
-    #     pass
     if request.method == 'GET':
-        data = User.objects.all()
-        serializer = UserSerializer(
-            data, context={'request': request}, many=True)
+        # data = User.objects.all()
+        serializer = UserSerializer(request.user)
         return Response(serializer.data)
 
     elif request.method == 'POST':
@@ -74,6 +67,8 @@ def signin(request):
                     }, status=status.HTTP_200_OK)
             response.set_cookie("access_token", access_token, httponly=True)
             response.set_cookie("refresh_token", refresh_token, httponly=True)
+            
+            login(request, user)
             return response
         # 로그인실패
         else:
