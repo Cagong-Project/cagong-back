@@ -1,8 +1,8 @@
 from django.shortcuts import render
 from rest_framework.response import Response
-from rest_framework.decorators import api_view
+from rest_framework.decorators import api_view, permission_classes
 from rest_framework import status
-from rest_framework import permissions
+from rest_framework.permissions import AllowAny
 from .models import User
 from .serializers import UserSerializer, SignupSerializer, MyTokenObtainPairSerializer
 from rest_framework_simplejwt.views import TokenObtainPairView
@@ -13,31 +13,35 @@ from django.contrib.auth import login, logout
 
 
 @api_view(['GET', 'POST'])
+@permission_classes([AllowAny])
 def signup(request):
     if request.method == 'GET':
-        data = User.objects.all()
-        serializer = UserSerializer(
-            data, context={'request': request}, many=True)
-        return Response(serializer.data)
+        # data = User.objects.all()
+        # serializer = UserSerializer(
+        #     data, context={'request': request}, many=True)
+        # return Response(serializer.data)
+        return Response( {"message": "회원가입페이지"}, status=status.HTTP_200_OK)
 
     elif request.method == 'POST':
         serializer = SignupSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
-            return Response(status=status.HTTP_201_CREATED)
+            return Response({"message": "회원가입 완료!"}, status=status.HTTP_201_CREATED)
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 class MyTokenObtainPairView(TokenObtainPairView):
-    permission_classes = (permissions.AllowAny,)
+    permission_classes = (AllowAny,)
     serializer_class = MyTokenObtainPairSerializer
 
 @api_view(['GET', 'POST'])
+@permission_classes([AllowAny])
 def signin(request):
     if request.method == 'GET':
         # data = User.objects.all()
-        serializer = UserSerializer(request.user)
-        return Response(serializer.data)
+        # serializer = UserSerializer(request.user)
+        # return Response(serializer.data)
+        return Response( {"message": "로그인 페이지"}, status=status.HTTP_200_OK)
 
     elif request.method == 'POST':
         user_id = request.data['user_id']
