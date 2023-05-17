@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'corsheaders',
     'user',
+    'webpush',
 ]
 
 MIDDLEWARE = [
@@ -136,3 +137,9 @@ CORS_ALLOW_METHODS = [
     'POST',
     'PUT',
 ]
+
+WEBPUSH_SETTINGS = {
+    "VAPID_PUBLIC_KEY": "BNCy3GGMLWZyC0fMfDN1AxAFttC1WFne95cDkhVyXMhw1OqgUS_I1vJDTzzgL6ufGkT9-iqf-W8NKrFaw0sRenE",
+    "VAPID_PRIVATE_KEY": "p81ejKnS8K-oDZsI-VAA3vVzMY1D7QDo7QjETjwSz5o",
+    "VAPID_ADMIN_EMAIL": "chadol1121@kookmin.ac.kr"  # 테스트용
+}
