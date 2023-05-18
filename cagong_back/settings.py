@@ -40,7 +40,11 @@ INSTALLED_APPS = [
     'rest_framework',
     'corsheaders',
     'user',
+<<<<<<< HEAD
     'webpush',
+=======
+    'rest_framework_simplejwt',
+>>>>>>> e8b3e2cfc6a6b8f53090bbd10bf2c275e4430704
 ]
 
 MIDDLEWARE = [
@@ -143,3 +147,14 @@ WEBPUSH_SETTINGS = {
     "VAPID_PRIVATE_KEY": "p81ejKnS8K-oDZsI-VAA3vVzMY1D7QDo7QjETjwSz5o",
     "VAPID_ADMIN_EMAIL": "chadol1121@kookmin.ac.kr"  # 테스트용
 }
+REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES': (
+        'rest_framework.permissions.IsAuthenticated',
+    ),
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
+    )
+}
+
+AUTH_USER_MODEL = "user.User"
