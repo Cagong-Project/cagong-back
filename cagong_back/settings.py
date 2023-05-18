@@ -40,11 +40,8 @@ INSTALLED_APPS = [
     'rest_framework',
     'corsheaders',
     'user',
-<<<<<<< HEAD
     'webpush',
-=======
     'rest_framework_simplejwt',
->>>>>>> e8b3e2cfc6a6b8f53090bbd10bf2c275e4430704
 ]
 
 MIDDLEWARE = [
