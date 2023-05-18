@@ -9,14 +9,17 @@ from django.core.validators import MinValueValidator, MaxValueValidator
 #
 class User(AbstractBaseUser):
     # 상속받아 구현한 필드
-    username = models.CharField(max_length=20, unique=True, null=False)
+    email = models.EmailField(
+        max_length=60)
+    username = models.CharField(max_length=20, unique=False, null=False)
     is_admin = models.BooleanField(default=False)
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
     is_superuser = models.BooleanField(default=False)
     # 우리가 추가하는 필드
-    # nickname = models.CharField(max_length=20, unique=False)
-     
+    user_id = models.CharField(max_length=20, unique=True)
+    phone = models.CharField(max_length=11, null=True)
+    
     #
     # customeruser필드
     #
@@ -31,13 +34,13 @@ class User(AbstractBaseUser):
 
 
     # 로그인에 사용할(auth) 컬럼 지정.
-    USERNAME_FIELD = 'username'
+    USERNAME_FIELD = 'user_id'
     # 필수 필드 지정
-    # REQUIRED_FIELDS = ['username','nickname']
+    REQUIRED_FIELDS = ['username','email']
 
     # 프린트될 내용 세팅
     def __str__(self):
-        return self.username
+        return self.user_id + ", " + self.username
 
     def has_perm(self, perm, obj=None):
         return True
@@ -70,13 +73,16 @@ class User(AbstractBaseUser):
     #     self.type = self.Types.CUSTOMERUSER
     #     return super().save(*args, **kwargs)
 
-    def create_user(self, username, password, **kwargs):
+    def create_user(self,user_id, username, password, email, **kwargs):
+        if not email:
+            raise ValueError("이메일 입력하셔야 합니다")
         if not username:
             raise ValueError("이름 입력하셔야 합니다")
         user = self.model(
-            username=username,
+            user_id=user_id,
+            email=self.normalize_email(email),
             password=password,
-            **kwargs,
+            username=username,**kwargs,
         )
 
         user.set_password(password)
@@ -86,6 +92,8 @@ class User(AbstractBaseUser):
 
     def create_superuser(self,user_id, username, password, email, **kwargs):
         user = self.create_user(
+            user_id=user_id,
+            email=self.normalize_email(email),
             password=password,
             username=username,**kwargs,
         )

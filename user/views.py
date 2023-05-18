@@ -44,9 +44,9 @@ def signin(request):
         return Response( {"message": "로그인 페이지"}, status=status.HTTP_200_OK)
 
     elif request.method == 'POST':
-        username = request.data['username']
+        user_id = request.data['user_id']
         password = request.data['password']
-        user = User.objects.filter(username=username).first()
+        user = User.objects.filter(user_id=user_id).first()
         
         # user_id 없음    
         if user is None:
