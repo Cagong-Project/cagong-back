@@ -14,12 +14,8 @@ class SignupSerializer(serializers.ModelSerializer):
         
     def create(self, validated_data):
         user = User.objects.create_user(
-            user_id=validated_data['user_id'],
-            email=validated_data['email'],
             username=validated_data['username'],
             password=validated_data['password'],
-            phone=validated_data['phone'],
-            # type=validated_data['type'],
         )
         return user
     
@@ -38,7 +34,7 @@ class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
         refresh = self.get_token(self.user)
         
          # response에 추가하고 싶은 key값들 추가
-        data['user_id'] = self.user.user_id
+        data['username'] = self.user.username
         data['refresh'] = str(refresh)
         data['access'] = str(refresh.access_token)
         data['success'] = True
