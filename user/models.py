@@ -10,7 +10,7 @@ from django.core.validators import MinValueValidator, MaxValueValidator
 class User(AbstractBaseUser):
     # 상속받아 구현한 필드
     email = models.EmailField(
-        max_length=60, default="email@gmail.com")
+        max_length=60)
     username = models.CharField(max_length=20, unique=False, null=False)
     is_admin = models.BooleanField(default=False)
     is_active = models.BooleanField(default=True)
@@ -18,7 +18,7 @@ class User(AbstractBaseUser):
     is_superuser = models.BooleanField(default=False)
     # 우리가 추가하는 필드
     user_id = models.CharField(max_length=20, unique=True)
-    phone = models.CharField(max_length=11, null=True, unique=True)
+    phone = models.CharField(max_length=11, null=True)
     
     #
     # customeruser필드
@@ -40,13 +40,13 @@ class User(AbstractBaseUser):
 
     # 프린트될 내용 세팅
     def __str__(self):
-        return self.email + "," + self.username
+        return self.user_id + ", " + self.username
 
-    # def has_perm(self, perm, obj=None):
-    #     return True
+    def has_perm(self, perm, obj=None):
+        return True
 
-    # def has_module_perms(self, app_label):
-    #     return True
+    def has_module_perms(self, app_label):
+        return True
 
     class Types(models.TextChoices):
         CUSTOMERUSER = "CUSTOMERUSER"
@@ -57,7 +57,7 @@ class User(AbstractBaseUser):
 
     # 무슨 유저타입?
     type = models.CharField(max_length=15,
-                            choices=Types.choices)
+                            choices=Types.choices, default="CUSTOMERUSER")
     objects = BaseUserManager()
 
     # def save(self, *args, **kwargs):
