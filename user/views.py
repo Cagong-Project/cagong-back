@@ -77,3 +77,36 @@ def signin(request):
         # 로그인실패
         else:
             return Response({"message": "로그인에 실패하였습니다."}, status=status.HTTP_400_BAD_REQUEST)
+
+# 포인트
+@api_view(['GET', 'POST'])
+def process_payment(request):
+    if request.method == 'POST':  # POST 요청을 받은 경우
+        user_id = request.data['user_id']
+        user = User.objects.filter(user_id=user_id).first()
+
+        # user_id 없음    
+        if user is None:
+            return  Response( {"message": "존재하지 않는 아이디입니다."}, status=status.HTTP_400_BAD_REQUEST)
+        
+        # 선택된 포인트와 사용자 포인트를 더한 값을 새로운 포인트로 갱신
+        selected_point = request.data['selected_point']
+        user_point = user.point
+        print(selected_point,user_point)
+        new_point = user_point + selected_point
+        print(selected_point,user_point,new_point)
+        
+        user.point = new_point
+        user.save()
+
+        # # 결과를 JSON 형식으로 반환
+        # response_data = {
+        #     'success': True,
+        #     'new_point': new_point,
+        # }
+
+        return Response({"message": "포인트 충전 완료!", "current_point":user.point}, status=status.HTTP_200_OK)
+
+
+    else:  # GET 요청을 받은 경우
+        return Response({"message": "포인트 페이지"}, status=status.HTTP_200_OK)
