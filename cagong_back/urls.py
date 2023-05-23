@@ -2,7 +2,7 @@ from django.contrib import admin
 from django.urls import include, path
 import user.views as user_views
 from rest_framework_simplejwt.views import TokenRefreshView, TokenVerifyView
-from .views import home, send_push
+from .views import send_push
 
 urlpatterns = [
     path('admin/', admin.site.urls),
