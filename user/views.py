@@ -83,7 +83,7 @@ def signin(request):
 def process_payment(request):
     if request.method == 'POST':  # POST 요청을 받은 경우
         user_id = request.data['user_id']
-        user = User.objects.filter(user_id=user_id).first()
+        user = User.objects.filter(user_id=user_id).first() #DB에서 해당 id의 유저 객체
 
         # user_id 없음    
         if user is None:
@@ -97,13 +97,7 @@ def process_payment(request):
         print(selected_point,user_point,new_point)
         
         user.point = new_point
-        user.save()
-
-        # # 결과를 JSON 형식으로 반환
-        # response_data = {
-        #     'success': True,
-        #     'new_point': new_point,
-        # }
+        user.save() #DB에 유저의 갱신된 point 저장하기.
 
         return Response({"message": "포인트 충전 완료!", "current_point":user.point}, status=status.HTTP_200_OK)
 
