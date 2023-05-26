@@ -5,12 +5,7 @@ class CafeSerializer(serializers.ModelSerializer):
     class Meta:
         model = Cafe
         fields = '__all__'
-
-class CategorySerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Category
-        fields = '__all__'
-
+        
 class MenuSerializer(serializers.ModelSerializer):
     class Meta:
         model = Menu
