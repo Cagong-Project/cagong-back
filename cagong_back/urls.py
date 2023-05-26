@@ -12,5 +12,5 @@ urlpatterns = [
          name='api/token_refresh'),
     path('api/token/verify/', TokenVerifyView.as_view(), name='token_verify'),
     path('api/signin/', user_views.signin),
-    path('', include('records.urls')),
+    path('api/record/', include('records.urls')),
 ]
