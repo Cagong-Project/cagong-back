@@ -1,5 +1,5 @@
 from django.contrib import admin
-from django.urls import path, re_path
+from django.urls import path, include
 import user.views as user_views
 from rest_framework_simplejwt.views import TokenRefreshView, TokenVerifyView
 
@@ -12,4 +12,5 @@ urlpatterns = [
          name='api/token_refresh'),
     path('api/token/verify/', TokenVerifyView.as_view(), name='token_verify'),
     path('api/signin/', user_views.signin),
+    path('api/record/', include('records.urls')),
 ]
