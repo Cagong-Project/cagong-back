@@ -14,3 +14,5 @@ source venv/Scripts/activate
 ```bash
 pip install -r requirements.txt
 ```
+
+commit test - 김혜은
