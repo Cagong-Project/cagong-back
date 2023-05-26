@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
 from pathlib import Path
+# import datetime
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -150,3 +151,8 @@ REST_FRAMEWORK = {
 }
 
 AUTH_USER_MODEL = "user.User"
+
+# SIMPLE_JWT = {
+#     'ACCESS_TOKEN_LIFETIME': datetime.timedelta(days=15),
+#     'REFRESH_TOKEN_LIFETIME': datetime.timedelta(days=15),
+# }
