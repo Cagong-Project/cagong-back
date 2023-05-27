@@ -5,7 +5,7 @@ from rest_framework import status
 from rest_framework.permissions import AllowAny
 from .models import User
 from .serializers import UserSerializer, SignupSerializer, MyTokenObtainPairSerializer
-from rest_framework_simplejwt.views import TokenObtainPairView
+from rest_framework_simplejwt.views import TokenObtainPairView, TokenVerifyView
 
 from django.contrib.auth.hashers import check_password
 
@@ -33,6 +33,9 @@ def signup(request):
 class MyTokenObtainPairView(TokenObtainPairView):
     permission_classes = (AllowAny,)
     serializer_class = MyTokenObtainPairSerializer
+    
+class MyTokenVerifyView(TokenVerifyView):
+    permission_classes = (AllowAny,)
 
 @api_view(['GET', 'POST'])
 @permission_classes([AllowAny])
