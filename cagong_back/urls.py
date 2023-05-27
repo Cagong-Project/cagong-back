@@ -17,4 +17,5 @@ urlpatterns = [
     path('api/getpush/', pushQue_views.get_push_notification),
     path('api/createpush/', pushQue_views.create_push_notification),
     path('api/record/', include('records.urls')),
+    path('api/charge_point/', user_views.charge_point),
 ]
