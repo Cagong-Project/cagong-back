@@ -19,6 +19,7 @@ class Cafe(models.Model):
             for i in range(num):
                 cafe = cafe_queryset[i] # i번째 cafe
                 cafeDict = {}
+                # cafeDict["id"] = cafe.id
                 cafeDict["name"] = cafe.name
                 cafeDict["location"] = cafe.location
                 cafeDict["info"] = cafe.info
