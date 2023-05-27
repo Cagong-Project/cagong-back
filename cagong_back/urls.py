@@ -1,6 +1,7 @@
 from django.contrib import admin
 from django.urls import path, include
 import user.views as user_views
+import cafe_list.views as cafe_list_views
 import pushQue.views as pushQue_views
 from rest_framework_simplejwt.views import TokenRefreshView, TokenVerifyView
 
@@ -14,6 +15,8 @@ urlpatterns = [
     path('api/token/verify/', TokenVerifyView.as_view(),
          name='token_verify'),
     path('api/signin/', user_views.signin),
+    path('api/charge_point/', user_views.charge_point, name='charge_point'),
+    path('api/cafe_list/', cafe_list_views.cafelist, name='cafelist'),
     path('api/getpush/', pushQue_views.get_push_notification),
     path('api/createpush/', pushQue_views.create_push_notification),
     path('api/record/', include('records.urls')),

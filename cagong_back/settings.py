@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'pushQue',
     'rest_framework_simplejwt',
     'records',
+    'cafe_list',
 ]
 
 MIDDLEWARE = [
@@ -152,8 +153,3 @@ REST_FRAMEWORK = {
 }
 
 AUTH_USER_MODEL = "user.User"
-
-# SIMPLE_JWT = {
-#     'ACCESS_TOKEN_LIFETIME': datetime.timedelta(days=15),
-#     'REFRESH_TOKEN_LIFETIME': datetime.timedelta(days=15),
-# }

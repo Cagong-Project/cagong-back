@@ -2,9 +2,10 @@ from django.db import models
 
 # 매장이름, 매장위치, 매장소개, owner_user_id, cafe 이미지는? (cafe_id)
 class Cafe(models.Model):
-    name = models.CharField(max_length=200)
+    name = models.CharField(max_length=10)
     location = models.TextField()
     info = models.TextField(null=True, blank=True)
+    phone = models.CharField(max_length=11, unique=True, null=True, blank=True)
     owner = models.ForeignKey('user.User', on_delete=models.SET_NULL, null=True, blank=True)
     
     def __str__(self):
