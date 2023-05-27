@@ -80,7 +80,7 @@ def signin(request):
 
 # 포인트
 @api_view(['GET', 'POST'])
-def process_payment(request):
+def charge_point(request):
     if request.method == 'POST':  # POST 요청을 받은 경우
         user_id = request.data['user_id']
         user = User.objects.filter(user_id=user_id).first() #DB에서 해당 id의 유저 객체
