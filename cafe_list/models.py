@@ -22,6 +22,7 @@ class Cafe(models.Model):
                 cafeDict["name"] = cafe.name
                 cafeDict["location"] = cafe.location
                 cafeDict["info"] = cafe.info
+                cafeDict["phone"] = cafe.phone
                 cafeDict["owner"] = cafe.owner
                 result[i] = cafeDict # 추가
         else:
