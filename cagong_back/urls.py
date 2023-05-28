@@ -17,6 +17,7 @@ urlpatterns = [
     path('api/signin/', user_views.signin),
     path('api/charge_point/', user_views.charge_point, name='charge_point'),
     path('api/cafe_list/', cafe_list_views.cafelist, name='cafelist'),
+    path('api/detail/<int:cafe_id>/', cafe_list_views.menu, name='menu'),
     path('api/getpush/', pushQue_views.get_push_notification),
     path('api/createpush/', pushQue_views.create_push_notification),
     path('api/record/', include('records.urls')),

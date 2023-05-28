@@ -1,10 +1,11 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404, redirect
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 from rest_framework import status
 import json
-from .models import Cafe
+from .models import Cafe, Menu
+from .serializers import MenuSerializer
 
 @api_view(['GET', 'POST'])
 @permission_classes([AllowAny])
@@ -29,3 +30,17 @@ def cafelist(request):
         result = json.dumps(getCafeList)
         print("json 결과는", result, type(result))
         return Response({"message": "검색 성공!!!", "search_result": result}, status=status.HTTP_200_OK)
+
+
+@api_view(['GET', 'POST'])
+@permission_classes([AllowAny])
+def menu(request, cafe_id):
+    menu = list(Menu.objects.filter(cafe = cafe_id).values())
+    serializer = MenuSerializer(data=menu, many= True)
+    print(menu)
+    print("결과를 보여주세요!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
+    # 시리얼라이저로 front에게 전송
+    if serializer.is_valid():
+        return Response({"message": "성공!!", "menu_list": serializer.data}, status=status.HTTP_200_OK)
+    print(serializer.errors)
+    return Response({"message": "유효하지않은 serializer"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
