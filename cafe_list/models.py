@@ -19,7 +19,7 @@ class Cafe(models.Model):
             for i in range(num):
                 cafe = cafe_queryset[i] # i번째 cafe
                 cafeDict = {}
-                # cafeDict["id"] = cafe.id
+                cafeDict["id"] = cafe.id
                 cafeDict["name"] = cafe.name
                 cafeDict["location"] = cafe.location
                 cafeDict["info"] = cafe.info
@@ -30,3 +30,12 @@ class Cafe(models.Model):
             return None
 
         return result
+
+# name, price, FK(cafe)
+class Menu(models.Model):
+    name = models.CharField(max_length=10)
+    price = models.CharField(max_length=6)
+    cafe = models.ForeignKey('cafe_list.Cafe', on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.name
