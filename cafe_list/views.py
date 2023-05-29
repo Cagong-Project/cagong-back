@@ -27,7 +27,7 @@ def cafelist(request):
 
 @api_view(['GET', 'POST'])
 @permission_classes([AllowAny])
-def menu(request, cafe_id):
+def detail(request, cafe_id):
     cafe = Cafe.objects.get(id=cafe_id)
     cafe_dict = {"name" : cafe.name, "location": cafe.location, "info": cafe.info, "phone": cafe.phone}
     cafe_json = json.dumps(cafe_dict)
