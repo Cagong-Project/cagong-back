@@ -7,7 +7,7 @@ from django.utils import timezone
 
 
 class Record(models.Model):
-    date = models.DateField(auto_now_add=True)
+    date = models.DateField(default=timezone.now)
     user = models.ForeignKey(
         User, on_delete=models.CASCADE, related_name="records")
     duration = models.DurationField(default=datetime.timedelta(0))
