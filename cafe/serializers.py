@@ -3,6 +3,7 @@ from rest_framework import serializers
 from user.serializers import UserSerializer
 
 class CafeSerializer(serializers.ModelSerializer):    
+    id = serializers.IntegerField()
     name = serializers.CharField()
     location = serializers.CharField()
     info = serializers.CharField()

@@ -44,7 +44,7 @@ INSTALLED_APPS = [
     'pushQue',
     'rest_framework_simplejwt',
     'records',
-    'cafe_list',
+    'cafe',
 ]
 
 MIDDLEWARE = [

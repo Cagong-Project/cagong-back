@@ -7,11 +7,11 @@ from .models import Cafe, Menu
 from .serializers import CafeSerializer, MenuSerializer
 import json
 
-@api_view(['GET'])
+@api_view(['GET', 'POST'])
 @permission_classes([AllowAny])
 def cafelist(request):
     search_value = request.data['search_value']
-     
+
     #DB에서 해당 값을 포함하는 카페 이름을 출력
     cafelist = list(Cafe.objects.filter(name__contains=search_value).values())
     serializer = CafeSerializer(data=cafelist, many=True)
@@ -26,16 +26,12 @@ def cafelist(request):
     return Response({"message": "invalid serializer"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 
-@api_view(['GET'])
+@api_view(['GET', 'POST'])
 @permission_classes([AllowAny])
 def detail(request, cafe_id):
-    cafe = Cafe.objects.get(id=cafe_id)
-    # cafe_dict = {"name" : cafe.name, "location": cafe.location, "info": cafe.info, "phone": cafe.phone}
-    # cafe_json = json.dumps(cafe_dict)
-
     # cafe 상세정보
-    cafelist = Cafe.objects.get(id=cafe_id)
-    serializer_cafe = CafeSerializer(cafelist)
+    cafe = Cafe.objects.get(id=cafe_id)
+    serializer_cafe = CafeSerializer(cafe)
 
     # menu 리스트
     menu = list(Menu.objects.filter(cafe = cafe_id).values())
