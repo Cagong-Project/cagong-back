@@ -26,16 +26,12 @@ def cafelist(request):
     return Response({"message": "invalid serializer"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 
-@api_view(['GET'])
+@api_view(['GET', 'POST'])
 @permission_classes([AllowAny])
 def detail(request, cafe_id):
-    cafe = Cafe.objects.get(id=cafe_id)
-    # cafe_dict = {"name" : cafe.name, "location": cafe.location, "info": cafe.info, "phone": cafe.phone}
-    # cafe_json = json.dumps(cafe_dict)
-
     # cafe 상세정보
-    cafelist = Cafe.objects.get(id=cafe_id)
-    serializer_cafe = CafeSerializer(cafelist)
+    cafe = Cafe.objects.get(id=cafe_id)
+    serializer_cafe = CafeSerializer(cafe)
 
     # menu 리스트
     menu = list(Menu.objects.filter(cafe = cafe_id).values())
