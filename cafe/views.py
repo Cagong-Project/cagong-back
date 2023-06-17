@@ -7,11 +7,11 @@ from .models import Cafe, Menu
 from .serializers import CafeSerializer, MenuSerializer
 import json
 
-@api_view(['GET'])
+@api_view(['GET', 'POST'])
 @permission_classes([AllowAny])
 def cafelist(request):
     search_value = request.data['search_value']
-     
+
     #DB에서 해당 값을 포함하는 카페 이름을 출력
     cafelist = list(Cafe.objects.filter(name__contains=search_value).values())
     serializer = CafeSerializer(data=cafelist, many=True)
