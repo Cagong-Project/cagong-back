@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'rest_framework_simplejwt',
     'records',
     'cafe',
+    'webpush',
     'orders',
 ]
 
@@ -154,3 +155,9 @@ REST_FRAMEWORK = {
 }
 
 AUTH_USER_MODEL = "user.User"
+
+WEBPUSH_SETTINGS = {
+    "VAPID_PUBLIC_KEY": "BFfPSwSUeD5BMrhffI3mQ4_MInWpiBS4wGmnmo1Q-ISa6RlVZcT8QnvHGkVYN_NfzRnynuACHdmUY_lEi5n_B5c",
+    "VAPID_PRIVATE_KEY": "a89016_OGD_6xF_NPlYB7treIlb-XPiM2iq4kTS0vhw",
+    "VAPID_ADMIN_EMAIL": "haram8009@gmail.com"
+}

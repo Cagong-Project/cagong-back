@@ -4,6 +4,16 @@ from rest_framework.response import Response
 from .models import PushNotification
 from .serializers import PushNotificationSerializer
 
+from webpush.utils import send_to_subscription
+
+def send_to_sub(request):
+    payload = {"head": "Welcome!", "body": "Hello World"}
+
+    user = request.user
+    push_infos = user.webpush_info.select_related("subscription")
+    for push_info in push_infos:
+        send_to_subscription(push_info.subscription, payload)
+
 @api_view(['GET'])
 def get_push_notification(request):
     # 요청한 사용자에 할당된 푸시 알림 조회
