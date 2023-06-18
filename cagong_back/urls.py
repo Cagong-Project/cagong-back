@@ -25,4 +25,5 @@ urlpatterns = [
     path('api/record/', include('records.urls')),
     path('api/charge_point/', user_views.charge_point),
     path('api/order/', order_views.order, name='order'),
+    path('api/get_user/', user_views.get_userDB, name='get_userDB'),
 ]
