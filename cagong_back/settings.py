@@ -46,7 +46,6 @@ INSTALLED_APPS = [
     'records',
     'cafe',
     'webpush',
-
 ]
 
 MIDDLEWARE = [

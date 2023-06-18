@@ -1,6 +1,5 @@
 from django.contrib import admin
-from django.conf.urls import url
-from django.urls import path, include
+from django.urls import path, include, re_path
 import user.views as user_views
 import cafe.views as cafe_views
 import pushQue.views as pushQue_views
@@ -24,5 +23,5 @@ urlpatterns = [
     path('api/createpush/', pushQue_views.create_push_notification),
     path('api/record/', include('records.urls')),
     path('api/charge_point/', user_views.charge_point),
-    url(r'^webpush/', include('webpush.urls'))
+    re_path(r'^webpush/', include('webpush.urls'))
 ]
