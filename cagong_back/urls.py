@@ -24,6 +24,6 @@ urlpatterns = [
     path('api/createpush/', pushQue_views.create_push_notification),
     path('api/record/', include('records.urls')),
     path('api/charge_point/', user_views.charge_point),
-    re_path(r'^webpush/', include('webpush.urls'))
+    re_path(r'^webpush/', include('webpush.urls')),
     path('api/order/', order_views.order, name='order'),
 ]
