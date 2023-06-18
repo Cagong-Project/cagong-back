@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from rest_framework.response import Response
-from .models import *
-from .serializers import OrderSerializer
+from .models import User, Menu, Order
+from records.models import Record
 from rest_framework import status
 from rest_framework.decorators import api_view
 from django.utils import timezone
@@ -25,8 +25,14 @@ def order(request):
     user.save() #DB에 유저의 갱신된 point 저장하기.
 
 
-    # DB에 order 객체 저장 성공 (serializer 사용 안 하긴 함.)
+    # DB에 order 객체 추가
     order=Order(timestamp=timezone.now(), customer=user, menu=menu)
     order.save()
 
-    return Response({'message': '포인트 차감, 주문 객체 생성 성공적.'}, status=status.HTTP_201_CREATED)
+    #DB에 record 객체 추가
+    record=Record(user=user)
+    record.save()
+
+
+
+    return Response({'message': '포인트 차감, order 및 record 객체 생성 성공.'}, status=status.HTTP_201_CREATED)
