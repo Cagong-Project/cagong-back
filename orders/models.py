@@ -11,6 +11,3 @@ class Order(models.Model):
                                 verbose_name="주문자")
     # payment = models.IntegerField(verbose_name="지불 금액")  # 필요가 없을 것 같음. 그냥 그만큼 차감되면 되니까.
     menu = models.ForeignKey(Menu, on_delete=models.CASCADE, verbose_name="상품")
-
-    def __str__(self):
-        return f"Order #{self.pk}"
