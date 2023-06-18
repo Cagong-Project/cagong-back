@@ -5,7 +5,7 @@ from rest_framework import status
 from rest_framework.permissions import AllowAny
 from .models import User
 from .serializers import UserSerializer, SignupSerializer, MyTokenObtainPairSerializer
-from rest_framework_simplejwt.views import TokenObtainPairView
+from rest_framework_simplejwt.views import TokenObtainPairView, TokenVerifyView
 
 from django.contrib.auth.hashers import check_password
 
@@ -33,6 +33,9 @@ def signup(request):
 class MyTokenObtainPairView(TokenObtainPairView):
     permission_classes = (AllowAny,)
     serializer_class = MyTokenObtainPairSerializer
+    
+class MyTokenVerifyView(TokenVerifyView):
+    permission_classes = (AllowAny,)
 
 @api_view(['GET', 'POST'])
 @permission_classes([AllowAny])
@@ -77,3 +80,30 @@ def signin(request):
         # 로그인실패
         else:
             return Response({"message": "로그인에 실패하였습니다."}, status=status.HTTP_400_BAD_REQUEST)
+
+# 포인트
+@api_view(['GET', 'POST'])
+def charge_point(request):
+    if request.method == 'POST':  # POST 요청을 받은 경우
+        user_id = request.data['user_id']
+        user = User.objects.filter(user_id=user_id).first() #DB에서 해당 id의 유저 객체
+
+        # user_id 없음    
+        if user is None:
+            return  Response( {"message": "존재하지 않는 아이디입니다."}, status=status.HTTP_400_BAD_REQUEST)
+        
+        # 선택된 포인트와 사용자 포인트를 더한 값을 새로운 포인트로 갱신
+        selected_point = request.data['selected_point']
+        user_point = user.point
+        print(selected_point,user_point)
+        new_point = user_point + selected_point
+        print(selected_point,user_point,new_point)
+        
+        user.point = new_point
+        user.save() #DB에 유저의 갱신된 point 저장하기.
+
+        return Response({"message": "포인트 충전 완료!", "current_point":user.point}, status=status.HTTP_200_OK)
+
+
+    else:  # GET 요청을 받은 경우
+        return Response({"message": "포인트 페이지"}, status=status.HTTP_200_OK)
