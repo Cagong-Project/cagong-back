@@ -26,4 +26,5 @@ urlpatterns = [
     path('api/charge_point/', user_views.charge_point),
     re_path(r'^webpush/', include('webpush.urls')),
     path('api/order/', order_views.order, name='order'),
+    path('api/get_user/', user_views.get_userDB, name='get_userDB'),
 ]

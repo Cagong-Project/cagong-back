@@ -34,5 +34,4 @@ def order(request):
     record.save()
 
 
-
-    return Response({'message': '포인트 차감, order 및 record 객체 생성 성공.'}, status=status.HTTP_201_CREATED)
+    return Response({'message': '포인트 차감, order 및 record 객체 생성 성공.', 'renewed_point':new_point}, status=status.HTTP_201_CREATED)

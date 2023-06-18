@@ -35,7 +35,7 @@ def done(request):
 @api_view(['GET'])
 def record_list(request, user_id):
     # records = 유저아이디로 검색한 레코드들을 "list of dict" 형태로 반환
-    records = list(Record.objects.filter(user__user_id__contains=user_id).values())
+    records = list(Record.objects.filter(user=user_id).values())
     serializer = RecordSerializer(data=records, many= True)
     if serializer.is_valid():
         return Response({"message": "List of Records", 
