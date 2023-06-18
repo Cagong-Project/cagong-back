@@ -1,9 +1,10 @@
 from django.shortcuts import render
 from rest_framework.response import Response
 from .models import *
-from .serializers import *
+from .serializers import OrderSerializer
 from rest_framework import status
 from rest_framework.decorators import api_view
+from django.utils import timezone
 
 @api_view(['POST'])
 def order(request):
@@ -23,22 +24,9 @@ def order(request):
     user.point = new_point
     user.save() #DB에 유저의 갱신된 point 저장하기.
 
-    # response return 할 때 갱신된 point도 같이 전달해주기.
-    return Response({"message": "포인트 차감 완료!", "current_point":user.point}, status=status.HTTP_200_OK)
 
+    # DB에 order 객체 저장 성공 (serializer 사용 안 하긴 함.)
+    order=Order(timestamp=timezone.now(), customer=user, menu=menu)
+    order.save()
 
-
-    # serializer = OrderSerializer(data=request.data)
-    # if serializer.is_valid():
-    #     # 주문 생성
-    #     order = serializer.save()
-        
-    #     # 포인트 차감 로직
-    #     point = Point.objects.get(user=request.user)
-    #     point.used += order.price
-    #     point.save()
-        
-    #     # 주문 완료 메시지 반환
-    #     return Response({'message': '주문이 완료되었습니다.'}, status=201)
-    
-    # return Response(serializer.errors, status=400)
+    return Response({'message': '포인트 차감, 주문 객체 생성 성공적.'}, status=status.HTTP_201_CREATED)
