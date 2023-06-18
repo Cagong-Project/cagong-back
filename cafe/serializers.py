@@ -16,6 +16,7 @@ class CafeSerializer(serializers.ModelSerializer):
         
 
 class MenuSerializer(serializers.ModelSerializer):
+    id = serializers.IntegerField()
     name = serializers.CharField()
     price = serializers.CharField()
     cafe = CafeSerializer(read_only=True)

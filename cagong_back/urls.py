@@ -3,6 +3,7 @@ from django.urls import path, include, re_path
 import user.views as user_views
 import cafe.views as cafe_views
 import pushQue.views as pushQue_views
+import orders.views as order_views
 from rest_framework_simplejwt.views import TokenRefreshView, TokenVerifyView
 
 urlpatterns = [
@@ -24,4 +25,5 @@ urlpatterns = [
     path('api/record/', include('records.urls')),
     path('api/charge_point/', user_views.charge_point),
     re_path(r'^webpush/', include('webpush.urls'))
+    path('api/order/', order_views.order, name='order'),
 ]
