@@ -1,8 +1,10 @@
 from django.shortcuts import render
-from rest_framework.decorators import api_view
+from rest_framework.decorators import api_view, permission_classes
+from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
+from rest_framework import status
 from .models import PushNotification
-from .serializers import PushNotificationSerializer
+from .serializers import PushNotificationSerializer, GetNotiSerializer
 
 from webpush.utils import send_to_subscription
 
@@ -14,24 +16,27 @@ def send_to_sub(request):
     for push_info in push_infos:
         send_to_subscription(push_info.subscription, payload)
 
-@api_view(['GET'])
-def get_push_notification(request):
+@api_view(['PUT'])
+@permission_classes([AllowAny])
+def get_push_notification(request, user_id):
     # 요청한 사용자에 할당된 푸시 알림 조회
-    # (request.user와 같은 user인 푸시 알림 객체가 없는 경우, 빈 쿼리셋이 리턴됨)
-    notifications = PushNotification.objects.filter(user=request.user)
-
+    # 유저아이디로 검색한 알림 쿼리셋을 "list of dict" 형태로 반환
+    notifications =list( PushNotification.objects.filter(user__user_id__contains=user_id).values())
+    
     # 쿼리셋이 비어있지 않으면 (즉, 할당된 푸시 알림이 있는 경우)
-    if notifications.exists():
-        serializer = PushNotificationSerializer(notifications, many=True)
+    if len(notifications):
+        serializer = GetNotiSerializer(notifications, many=True)
         data = serializer.data
+        # print(data)
+        
+        # TODO: 시간이 이미 지난 푸시 알림은 iter=9로 보냄처리
+        # notifications.delete()
+        
+        # TODO: iter=9인 알림만 보내기
 
-        # 조회한 푸시 알림 제거
-        notifications.delete()
-
-        return Response(data, status=200)
-
+        return Response({'message': 'List of Notifications', "notifications" : data}, status=status.HTTP_200_OK)
     # 할당된 푸시 알림이 없는 경우 204 리턴, 또는 주석 처리
-    return Response({'message': '푸시 알림이 없습니다.'}, status=204)
+    return Response({'message': '푸시 알림이 없습니다.'}, status=status.HTTP_204_NO_CONTENT)
 
 @api_view(['POST'])
 def create_push_notification(request):

@@ -86,7 +86,7 @@ def signin(request):
 def charge_point(request):
     if request.method == 'POST':  # POST 요청을 받은 경우
         user_id = request.data['user_id']
-        user = User.objects.get(id=user_id) #DB에서 해당 id의 유저 객체
+        user = User.objects.get(user_id=user_id) #DB에서 해당 id의 유저 객체
 
         # user_id 없음
         if user is None:
@@ -111,7 +111,7 @@ def charge_point(request):
 @api_view(['GET', 'POST'])
 def get_userDB(request):
     user_id = request.data['user_id']
-    user = User.objects.get(id=user_id) #DB에서 해당 id의 유저 객체
+    user = User.objects.get(user_id=user_id) #DB에서 해당 id의 유저 객체
     
     # user_id 없음
     if user is None:
