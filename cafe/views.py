@@ -31,7 +31,7 @@ class CafeListAPIView(APIView):
 class CafeDetailAPIView(APIView):
     permission_classes = [AllowAny]
 
-    def get(self, request, cafe_id):
+    def post(self, request, cafe_id):
         # cafe 상세정보
         cafe = get_object_or_404(Cafe, id=cafe_id)
         serializer_cafe = CafeSerializer(cafe)
