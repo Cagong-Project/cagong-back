@@ -20,7 +20,7 @@ urlpatterns = [
     path('api/cafe/', cafe_views.cafelist, name='cafe'),
     path('api/cafe/detail/<int:cafe_id>/',
          cafe_views.detail, name='detail'),
-    path('api/getpush/', pushQue_views.get_push_notification),
+    path('api/getpush/<str:user_id>', pushQue_views.get_push_notification),
     path('api/createpush/', pushQue_views.create_push_notification),
     path('api/record/', include('records.urls')),
     path('api/charge_point/', user_views.charge_point),
