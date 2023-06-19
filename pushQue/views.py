@@ -6,7 +6,7 @@ from rest_framework.views import APIView
 from rest_framework.permissions import IsAuthenticated, AllowAny
 
 
-class get_pushNotificationAPIView(APIView):
+class GetPushNotificationAPIView(APIView):
     # permission_classes = [IsAuthenticated] 
     permission_classes = [AllowAny] # 알수없는 오류로 일단 AllowAny
 
@@ -30,7 +30,8 @@ class get_pushNotificationAPIView(APIView):
         # 할당된 푸시 알림이 없는 경우 204 리턴, 또는 주석 처리
         return Response({'message': '푸시 알림이 없습니다.'}, status=status.HTTP_204_NO_CONTENT)
 
-class create_pushNotificationAPIView(APIView):
+
+class CreatePushNotificationAPIView(APIView):
     permission_classes = [IsAuthenticated]
 
     def post(self, request):
