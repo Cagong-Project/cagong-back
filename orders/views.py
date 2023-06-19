@@ -15,7 +15,7 @@ def order(request):
     menu_id = request.data['menu_id']
 
     #객체를 DB에서 불러오기
-    user = User.objects.get(id=user_id)
+    user = User.objects.get(user_id=user_id)
     menu = Menu.objects.get(id=menu_id)
 
     #user 객체의 point 차감 (일단 point가 충분히 있다는 가정하에)
@@ -42,7 +42,6 @@ def order(request):
     notification.iter = 0
     notification.title = f"CAFE {menu.cafe.name}에서 주문이 발생했습니다."
     notification.msg = f"{menu.name}을(를) 주문하셨습니다. 2시간 뒤에 다시 알려드릴게요😉"
-    print('msg :',notification.msg)
     notification.save()
 
     return Response({'message': '포인트 차감, order 및 record 객체 생성 성공.', 'renewed_point':new_point}, status=status.HTTP_201_CREATED)
