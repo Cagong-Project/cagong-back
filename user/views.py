@@ -86,9 +86,9 @@ def signin(request):
 def charge_point(request):
     if request.method == 'POST':  # POST 요청을 받은 경우
         user_id = request.data['user_id']
-        user = User.objects.filter(user_id=user_id).first() #DB에서 해당 id의 유저 객체
+        user = User.objects.get(id=user_id) #DB에서 해당 id의 유저 객체
 
-        # user_id 없음    
+        # user_id 없음
         if user is None:
             return  Response( {"message": "존재하지 않는 아이디입니다."}, status=status.HTTP_400_BAD_REQUEST)
         
@@ -107,3 +107,13 @@ def charge_point(request):
 
     else:  # GET 요청을 받은 경우
         return Response({"message": "포인트 페이지"}, status=status.HTTP_200_OK)
+
+@api_view(['GET', 'POST'])
+def get_userDB(request):
+    user_id = request.data['user_id']
+    user = User.objects.get(id=user_id) #DB에서 해당 id의 유저 객체
+    
+    # user_id 없음
+    if user is None:
+        return  Response( {"message": "존재하지 않는 아이디입니다."}, status=status.HTTP_400_BAD_REQUEST)
+    return Response({"username":user.username, "point":user.point }, status=status.HTTP_200_OK)
